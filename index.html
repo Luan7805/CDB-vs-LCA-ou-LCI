@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Comparador CDB com LCI ou Main</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous"/>
+    <style>
+        .h100 {
+            height: 180px;
+            border: black solid 1px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="h3 text-center">Comparar CDB com LCI ou Main</h1>
+
+    <div class="row mt-3">
+        <div class="form-group col-md-6 col-sm-12">
+            <label for="LCA">Taxa da LCI ou Main</label>
+            <input type="number" step="any" class="form-control input-value" id="LCA" value="100">
+        </div>
+
+        <div class="form-group col-md-6 col-sm-12">
+            <label for="CDB">Taxa do CDB</label>
+            <input type="number" step="any" class="form-control input-value" id="CDB" value="100">
+        </div>
+
+    </div>
+
+    <div class="row text-center">
+
+        <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+            <div class="h100">
+                <h2 class="h5 p-3">Até 6 meses<br><small>(180 dias)</small></h2>
+                <div class="row">
+                    <p class="col-6">Main<br><span id="ate180DiasLCA"></span></p>
+                    <p class="col-6">CDB<br><span id="ate180DiasCDB"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+            <div class="h100">
+                <h2 class="h5 p-3">De 6 meses a 1 ano<br><small>(181 a 360 dias)</small></h2>
+                <div class="row">
+                    <p class="col-6">Main<br><span id="ate360DiasLCA"></span></p>
+                    <p class="col-6">CDB<br><span id="ate360DiasCDB"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+            <div class="h100">
+                <h2 class="h5 p-3">De 1 a 2 anos<br><small>(361 a 720 dias)</small></h2>
+                <div class="row">
+                    <p class="col-6">Main<br><span id="ate720DiasLCA"></span></p>
+                    <p class="col-6">CDB<br><span id="ate720DiasCDB"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+            <div class="h100">
+                <h2 class="h5 p-3">Acima de 2 anos<br><small>(720 dias)</small></h2>
+                <div class="row" id="maisDe720Dias">
+                    <p class="col-6">Main<br><span id="maisDe720DiasLCA"></span></p>
+                    <p class="col-6">CDB<br><span id="maisDe720DiasCDB"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../main.js"></script>
+<script>
+
+    window.onload = function() {
+       calcular();
+    }
+
+    document.getElementById('LCA').addEventListener("change", calcular);
+    document.getElementById('CDB').addEventListener("change", calcular);
+
+    document.getElementById('LCA').addEventListener("keyup", calcular);
+    document.getElementById('CDB').addEventListener("keyup", calcular);
+
+    function calcular(){
+        let valorLCA = Number(document.getElementById('LCA').value);
+        let CDBSemIR = CDB(Number(document.getElementById('CDB').value));
+
+        document.getElementById('ate180DiasCDB').innerHTML =  CDBSemIR.ate180Dias.toFixed(2);
+        document.getElementById('ate360DiasCDB').innerHTML = CDBSemIR.ate360Dias.toFixed(2);
+        document.getElementById('ate720DiasCDB').innerHTML = CDBSemIR.ate720Dias.toFixed(2);
+        document.getElementById('maisDe720DiasCDB').innerHTML = CDBSemIR.maisDe720Dias.toFixed(2);
+
+        document.getElementById('ate180DiasLCA').innerHTML = valorLCA.toFixed(2);
+        document.getElementById('ate360DiasLCA').innerHTML = valorLCA.toFixed(2);
+        document.getElementById('ate720DiasLCA').innerHTML = valorLCA.toFixed(2);
+        document.getElementById('maisDe720DiasLCA').innerHTML = valorLCA.toFixed(2);
+
+    }
+</script>
+</body>
+</html>
