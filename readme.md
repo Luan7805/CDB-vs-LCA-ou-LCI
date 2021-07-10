@@ -12,5 +12,8 @@ Tabela regressiva de imposto de renda:
 | De 1 a 2 anos | 17,5% |
 | Acima de 2 anos | 15% |
 
-Para podermos comparar basta aplicar uma taxa de desconto relativo a alíquota do imposto de renda.
-EX: Um CDB 100% do CDI, num prazo de até 6 meses. Basta efetuar a conta `100 * 0.775 = 77,5` sendo `0.775` a taxa de desconto obtida a partir da alíquota de imposto de renda (`1 - (22.5 / 1000) = 0.775`)
+Para podermos comparar basta aplicar uma taxa de desconto relativo a alíquota do imposto de renda. EX: Um CDB 100% do CDI, num prazo de até 6 meses.
+
+Primeiro devemos converter a alíquota do IR para percentual, utilizamos o seguinte cálculo: `1 – (Alíquota do IR / 100)` = `1 - (22.5 / 100) = 0.775`
+
+Basta efetuar a conta `(% do CDI) * (Taxa de desconto)` = `100 * 0.775 = 77,5` sendo 77,5% a rentabilidade líquida do CBD
