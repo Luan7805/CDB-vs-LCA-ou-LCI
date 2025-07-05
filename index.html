@@ -6,68 +6,122 @@
     <title>Comparador CDB com LCI ou LCA</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        .h100 {
-            height: 180px;
-            border: black solid 1px;
+        body {
+            background-color: #f8f9fa;
+        }
+        .calculator-card {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: .75rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,.05);
+            margin-top: 1.5rem;
+        }
+        .calculator-card .card-header {
+            background-color: #007bff;
+            color: white;
+            font-weight: 500;
+            border-top-left-radius: .75rem;
+            border-top-right-radius: .75rem;
+        }
+        .calculator-card .card-body {
+            padding: 1.5rem;
+        }
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        .result-row:last-child {
+            border-bottom: none;
+        }
+        .result-label {
+            color: #6c757d;
+        }
+        .result-value {
+            font-weight: bold;
+            color: #343a40;
+        }
+        .form-control-lg {
+            text-align: center;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-<div class="container mt-5">
-    <h1 class="h3 text-center">Comparar CDB com LCI ou LCA</h1>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
 
-    <div class="row mt-3">
-        <div class="form-group col-md-6 col-sm-12">
-            <label for="LCA">Taxa da LCI ou LCA</label>
-            <input type="number" step="any" class="form-control input-value" id="LCA" value="100">
-        </div>
+            <h1 class="h3 text-center mb-3">Calculadora de Equivalência: CDB vs LCI/LCA</h1>
+            <p class="text-center text-muted">Insira uma taxa de rentabilidade e veja instantaneamente o valor equivalente entre um CDB (com imposto) e uma LCI/LCA (isenta).</p>
 
-        <div class="form-group col-md-6 col-sm-12">
-            <label for="CDB">Taxa do CDB</label>
-            <input type="number" step="any" class="form-control input-value" id="CDB" value="100">
-        </div>
-
-    </div>
-
-    <div class="row text-center">
-
-        <div class="col-lg-3 col-md-4 col-sm-6 p-3">
-            <div class="h100">
-                <h2 class="h5 p-3">Até 6 meses<br><small>(180 dias)</small></h2>
-                <div class="row">
-                    <p class="col-6">LCA<br><span id="ate180DiasLCA"></span></p>
-                    <p class="col-6">CDB<br><span id="ate180DiasCDB"></span></p>
+            <div class="form-group mt-4">
+                <label for="taxaInvestimento" class="sr-only">Taxa do Investimento (% do CDI)</label>
+                <div class="input-group">
+                    <input type="number" step="any" class="form-control form-control-lg" id="taxaInvestimento" value="100">
+                    <div class="input-group-append">
+                        <span class="input-group-text">% do CDI</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-3 col-md-4 col-sm-6 p-3">
-            <div class="h100">
-                <h2 class="h5 p-3">De 6 meses a 1 ano<br><small>(181 a 360 dias)</small></h2>
-                <div class="row">
-                    <p class="col-6">LCA<br><span id="ate360DiasLCA"></span></p>
-                    <p class="col-6">CDB<br><span id="ate360DiasCDB"></span></p>
+            <div class="row">
+                <!-- Coluna 1: Se o investimento for LCI/LCA -->
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <div class="card-header text-center">
+                            Se sua LCI/LCA rende <span id="lciRate">100</span>%
+                        </div>
+                        <div class="card-body">
+                            <h6 class="text-center mb-3">Um CDB precisaria render:</h6>
+                            <div class="result-row">
+                                <span class="result-label">Até 6 meses (IR 22.5%)</span>
+                                <span class="result-value"><span id="lciToCdb180">129.03</span>%</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">6m a 1 ano (IR 20%)</span>
+                                <span class="result-value"><span id="lciToCdb360">125.00</span>%</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">1 a 2 anos (IR 17.5%)</span>
+                                <span class="result-value"><span id="lciToCdb720">121.21</span>%</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Acima de 2 anos (IR 15%)</span>
+                                <span class="result-value"><span id="lciToCdbOver720">117.65</span>%</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="col-lg-3 col-md-4 col-sm-6 p-3">
-            <div class="h100">
-                <h2 class="h5 p-3">De 1 a 2 anos<br><small>(361 a 720 dias)</small></h2>
-                <div class="row">
-                    <p class="col-6">LCA<br><span id="ate720DiasLCA"></span></p>
-                    <p class="col-6">CDB<br><span id="ate720DiasCDB"></span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-sm-6 p-3">
-            <div class="h100">
-                <h2 class="h5 p-3">Acima de 2 anos<br><small>(720 dias)</small></h2>
-                <div class="row" id="maisDe720Dias">
-                    <p class="col-6">LCA<br><span id="maisDe720DiasLCA"></span></p>
-                    <p class="col-6">CDB<br><span id="maisDe720DiasCDB"></span></p>
+                <!-- Coluna 2: Se o investimento for CDB -->
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <div class="card-header text-center">
+                            Se seu CDB rende <span id="cdbRate">100</span>%
+                        </div>
+                        <div class="card-body">
+                            <h6 class="text-center mb-3">A rentabilidade líquida seria:</h6>
+                            <div class="result-row">
+                                <span class="result-label">Até 6 meses (IR 22.5%)</span>
+                                <span class="result-value"><span id="cdbToLci180">77.50</span>%</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">6m a 1 ano (IR 20%)</span>
+                                <span class="result-value"><span id="cdbToLci360">80.00</span>%</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">1 a 2 anos (IR 17.5%)</span>
+                                <span class="result-value"><span id="cdbToLci720">82.50</span>%</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Acima de 2 anos (IR 15%)</span>
+                                <span class="result-value"><span id="cdbToLciOver720">85.00</span>%</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,33 +130,5 @@
 
 
 <script src="main.js"></script>
-<script>
-
-    window.onload = function() {
-       calcular();
-    }
-
-    document.getElementById('LCA').addEventListener("change", calcular);
-    document.getElementById('CDB').addEventListener("change", calcular);
-
-    document.getElementById('LCA').addEventListener("keyup", calcular);
-    document.getElementById('CDB').addEventListener("keyup", calcular);
-
-    function calcular(){
-        let valorLCA = Number(document.getElementById('LCA').value);
-        let CDBSemIR = CDB(Number(document.getElementById('CDB').value));
-
-        document.getElementById('ate180DiasCDB').innerHTML =  CDBSemIR.ate180Dias.toFixed(2);
-        document.getElementById('ate360DiasCDB').innerHTML = CDBSemIR.ate360Dias.toFixed(2);
-        document.getElementById('ate720DiasCDB').innerHTML = CDBSemIR.ate720Dias.toFixed(2);
-        document.getElementById('maisDe720DiasCDB').innerHTML = CDBSemIR.maisDe720Dias.toFixed(2);
-
-        document.getElementById('ate180DiasLCA').innerHTML = valorLCA.toFixed(2);
-        document.getElementById('ate360DiasLCA').innerHTML = valorLCA.toFixed(2);
-        document.getElementById('ate720DiasLCA').innerHTML = valorLCA.toFixed(2);
-        document.getElementById('maisDe720DiasLCA').innerHTML = valorLCA.toFixed(2);
-
-    }
-</script>
 </body>
 </html>
