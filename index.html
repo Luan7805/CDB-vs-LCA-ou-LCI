@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Comparador CDB com LCI ou LCA</title>
+    <title>Comparador de Investimentos (Novas Regras Tributárias)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
@@ -15,6 +15,7 @@
             border-radius: .75rem;
             box-shadow: 0 4px 6px rgba(0,0,0,.05);
             margin-top: 1.5rem;
+            height: 100%;
         }
         .calculator-card .card-header {
             background-color: #007bff;
@@ -25,26 +26,23 @@
         }
         .calculator-card .card-body {
             padding: 1.5rem;
-        }
-        .result-row {
             display: flex;
-            justify-content: space-between;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        .result-row:last-child {
-            border-bottom: none;
-        }
-        .result-label {
-            color: #6c757d;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         .result-value {
             font-weight: bold;
-            color: #343a40;
+            color: #28a745;
+            font-size: 2rem;
         }
         .form-control-lg {
             text-align: center;
             font-weight: bold;
+        }
+        .tax-info {
+            font-size: 0.85rem;
+            color: #6c757d;
         }
     </style>
 </head>
@@ -54,8 +52,8 @@
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
 
-            <h1 class="h3 text-center mb-3">Calculadora de Equivalência: CDB vs LCI/LCA</h1>
-            <p class="text-center text-muted">Insira uma taxa de rentabilidade e veja instantaneamente o valor equivalente entre um CDB (com imposto) e uma LCI/LCA (isenta).</p>
+            <h1 class="h3 text-center mb-3">Calculadora de Equivalência (Novas Regras)</h1>
+            <p class="text-center text-muted">Insira uma taxa e veja o valor equivalente entre CDB e LCI/LCA com as novas alíquotas fixas.</p>
 
             <div class="form-group mt-4">
                 <label for="taxaInvestimento" class="sr-only">Taxa do Investimento (% do CDI)</label>
@@ -75,23 +73,9 @@
                             Se sua LCI/LCA rende <span id="lciRate">100</span>%
                         </div>
                         <div class="card-body">
-                            <h6 class="text-center mb-3">Um CDB precisaria render:</h6>
-                            <div class="result-row">
-                                <span class="result-label">Até 6 meses (IR 22.5%)</span>
-                                <span class="result-value"><span id="lciToCdb180">129.03</span>%</span>
-                            </div>
-                            <div class="result-row">
-                                <span class="result-label">6m a 1 ano (IR 20%)</span>
-                                <span class="result-value"><span id="lciToCdb360">125.00</span>%</span>
-                            </div>
-                            <div class="result-row">
-                                <span class="result-label">1 a 2 anos (IR 17.5%)</span>
-                                <span class="result-value"><span id="lciToCdb720">121.21</span>%</span>
-                            </div>
-                            <div class="result-row">
-                                <span class="result-label">Acima de 2 anos (IR 15%)</span>
-                                <span class="result-value"><span id="lciToCdbOver720">117.65</span>%</span>
-                            </div>
+                            <h6 class="text-center mb-2">Um CDB precisaria render:</h6>
+                            <p class="result-value"><span id="lciToCdbEquivalent">115.15</span>%</p>
+                            <p class="tax-info text-center mt-2">Cálculo considera IR de 5% na LCI vs 17,5% no CDB.</p>
                         </div>
                     </div>
                 </div>
@@ -103,23 +87,9 @@
                             Se seu CDB rende <span id="cdbRate">100</span>%
                         </div>
                         <div class="card-body">
-                            <h6 class="text-center mb-3">A rentabilidade líquida seria:</h6>
-                            <div class="result-row">
-                                <span class="result-label">Até 6 meses (IR 22.5%)</span>
-                                <span class="result-value"><span id="cdbToLci180">77.50</span>%</span>
-                            </div>
-                            <div class="result-row">
-                                <span class="result-label">6m a 1 ano (IR 20%)</span>
-                                <span class="result-value"><span id="cdbToLci360">80.00</span>%</span>
-                            </div>
-                            <div class="result-row">
-                                <span class="result-label">1 a 2 anos (IR 17.5%)</span>
-                                <span class="result-value"><span id="cdbToLci720">82.50</span>%</span>
-                            </div>
-                            <div class="result-row">
-                                <span class="result-label">Acima de 2 anos (IR 15%)</span>
-                                <span class="result-value"><span id="cdbToLciOver720">85.00</span>%</span>
-                            </div>
+                            <h6 class="text-center mb-2">Sua LCI/LCA precisaria render:</h6>
+                            <p class="result-value"><span id="cdbToLciEquivalent">86.84</span>%</p>
+                            <p class="tax-info text-center mt-2">Cálculo considera IR de 17,5% no CDB vs 5% na LCI.</p>
                         </div>
                     </div>
                 </div>
