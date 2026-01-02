@@ -1,15 +1,19 @@
-// Alíquotas de imposto segundo a medida provisória 1303/25
-const TAXA_IR_LCI = 0.05;  // 5%
-const TAXA_IR_CDB = 0.175; // 17.5%
-
-function lciToCdbEquivalent(lciRate) {
-    const netLciReturn = lciRate * (1 - TAXA_IR_LCI);
-    return netLciReturn / (1 - TAXA_IR_CDB);
+function calcularEquivalenteCDB(lcaPercentual) {
+    return {
+        ate180Dias: lcaPercentual / 0.775,
+        ate360Dias: lcaPercentual / 0.8,
+        ate720Dias: lcaPercentual / 0.825,
+        maisDe720Dias: lcaPercentual / 0.85
+    };
 }
 
-function cdbToLciEquivalent(cdbRate) {
-    const netCdbReturn = cdbRate * (1 - TAXA_IR_CDB);
-    return netCdbReturn / (1 - TAXA_IR_LCI);
+function calcularLiquidoCDB(cdbPercentual) {
+    return {
+        ate180Dias: cdbPercentual * 0.775,
+        ate360Dias: cdbPercentual * 0.8,
+        ate720Dias: cdbPercentual * 0.825,
+        maisDe720Dias: cdbPercentual * 0.85
+    };
 }
 
 function calcular() {
@@ -17,13 +21,19 @@ function calcular() {
 
     // Cenário 1: O input é uma LCI/LCA
     document.getElementById('lciRate').textContent = taxa.toFixed(2);
-    const cdbEquivalente = lciToCdbEquivalent(taxa);
-    document.getElementById('lciToCdbEquivalent').textContent = cdbEquivalente.toFixed(2);
+    const cdbEquivalente = calcularEquivalenteCDB(taxa);
+    document.getElementById('lciToCdb180').textContent = cdbEquivalente.ate180Dias.toFixed(2);
+    document.getElementById('lciToCdb360').textContent = cdbEquivalente.ate360Dias.toFixed(2);
+    document.getElementById('lciToCdb720').textContent = cdbEquivalente.ate720Dias.toFixed(2);
+    document.getElementById('lciToCdbOver720').textContent = cdbEquivalente.maisDe720Dias.toFixed(2);
 
     // Cenário 2: O input é um CDB
     document.getElementById('cdbRate').textContent = taxa.toFixed(2);
-    const lciEquivalente = cdbToLciEquivalent(taxa);
-    document.getElementById('cdbToLciEquivalent').textContent = lciEquivalente.toFixed(2);
+    const cdbLiquido = calcularLiquidoCDB(taxa);
+    document.getElementById('cdbToLci180').textContent = cdbLiquido.ate180Dias.toFixed(2);
+    document.getElementById('cdbToLci360').textContent = cdbLiquido.ate360Dias.toFixed(2);
+    document.getElementById('cdbToLci720').textContent = cdbLiquido.ate720Dias.toFixed(2);
+    document.getElementById('cdbToLciOver720').textContent = cdbLiquido.maisDe720Dias.toFixed(2);
 }
 
 // EVENT LISTENERS
